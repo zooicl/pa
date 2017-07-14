@@ -1,12 +1,11 @@
-import time
+from ..helper.reporter import Reporter
 
-from classification.classifier import ClassifierFactory
-from helper.reporter import Reporter
+from .classifier_factory import ClassifierFactory
 
 
 class Modeling:
     def __init__(self, algorithm, X_train, y_train, params, desc):
-        self.reporter = Reporter(self.algo, params, desc)
+        self.reporter = Reporter(algorithm, params, desc)
 
         self.model = ClassifierFactory.create_model(algorithm)
         self.model.build(X_train, y_train, params)

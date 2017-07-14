@@ -1,6 +1,6 @@
 from sklearn.tree import DecisionTreeClassifier
 
-from classification.classifier import Classifier
+from .classifier import Classifier
 
 
 class DecisionTree(Classifier):

@@ -1,6 +1,6 @@
 from xgboost import XGBClassifier
 
-from classification.classifier import Classifier
+from .classifier import Classifier
 
 
 class XGB(Classifier):
