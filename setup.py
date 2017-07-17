@@ -7,7 +7,9 @@ setup(
     packages=find_packages(exclude=['tests']),
     # packages=['classification', 'helper'],
     # package_dir={'classification': 'src/classification', 'helper': 'src/helper'},
-    install_requires=[],
+    install_requires=[
+        'scikit-learn',
+    ],
     license='MIT License',
     author='zooicl',
     author_email='aiden.hyochan.song@gmail.com',

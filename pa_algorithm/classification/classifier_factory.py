@@ -1,5 +1,7 @@
 from .decision_tree import DecisionTree
 from .xgb import XGB
+from .svm import SVC
+from .rf import RandomForestClassifier
 
 
 class ClassifierFactory(object):
@@ -15,10 +17,10 @@ class ClassifierFactory(object):
         elif algorithm == 'XGB':
             model = XGB()
         elif algorithm == 'SVM':
-            # model = SVC()
+            model = SVC()
             pass
         elif algorithm == 'RF':
-            # model = RandomForestClassifier()
+            model = RandomForestClassifier()
             pass
         else:
             raise ValueError('algorithm name ({}) is not defined.'.format(algorithm))
