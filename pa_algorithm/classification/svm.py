@@ -4,5 +4,5 @@ from .classifier import Classifier
 
 
 class SVC(Classifier):
-    def __build__(self, params):
+    def __fit__(self, params):
         return svm.SVC(**params)

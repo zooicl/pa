@@ -3,5 +3,5 @@ from .classifier import Classifier
 
 
 class RandomForestClassifier(Classifier):
-    def __build__(self, params):
+    def __fit__(self, params):
         return ensemble.RandomForestClassifier(**params)

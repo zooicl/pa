@@ -1,6 +1,7 @@
 import abc
 import time
 import operator
+from sklearn import model_selection
 
 
 class Classifier(object):
@@ -10,18 +11,21 @@ class Classifier(object):
         self.__clf = None
         return
 
-    def build(self, X_train, y_train, params):
+    def fit(self, X_train, y_train, params):
         t = time.time()
 
-        self.__clf = self.__build__(params)
+        self.__clf = self.__fit__(params)
 
         if self.__clf is None:
             raise ValueError('clf is None')
 
         self.__clf = self.__clf.fit(X_train, y_train)
-        print('Build', time.time() - t)
+        print('fit', time.time() - t)
 
         return
+
+    def cross_val_score(self, X_train, y_train, params):
+        return model_selection.cross_val_score(self.__clf, X_train, y_train, **params)
 
     def predict(self, X_test):
         y_pred = self.__clf.predict(X_test)
@@ -45,5 +49,5 @@ class Classifier(object):
             return 'No provided!'
 
     @abc.abstractmethod
-    def __build__(self, params):
+    def __fit__(self, params):
         pass

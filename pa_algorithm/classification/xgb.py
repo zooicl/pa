@@ -4,5 +4,5 @@ from .classifier import Classifier
 
 
 class XGB(Classifier):
-    def __build__(self, params):
+    def __fit__(self, params):
         return XGBClassifier(**params)
