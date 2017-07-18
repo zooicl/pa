@@ -37,7 +37,7 @@ rf = {
 }
 
 for algo in [dt, xgb, svm, rf]:
-# for algo in [rf]:
+    # for algo in [rf]:
     name = algo['name']
     params = algo['params']
     desc = algo['desc']

@@ -1,3 +1,4 @@
+from .classifier import Classifier
 from .decision_tree import DecisionTree
 from .xgb import XGB
 from .svm import SVC
@@ -26,3 +27,7 @@ class ClassifierFactory(object):
             raise ValueError('algorithm name ({}) is not defined.'.format(algorithm))
 
         return model
+
+    @classmethod
+    def load_model(cls, filename):
+        return Classifier().load_model(filename)

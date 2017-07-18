@@ -2,13 +2,17 @@ import abc
 import time
 import operator
 from sklearn import model_selection
+from sklearn.externals import joblib
 
 
 class Classifier(object):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self):
+    def __init__(self, filename=None):
         self.__clf = None
+
+        if filename is not None:
+            self.load_model(filename)
         return
 
     def fit(self, X_train, y_train, params):
@@ -47,6 +51,12 @@ class Classifier(object):
             return sorted(feature_map.items(), key=operator.itemgetter(1), reverse=True)
         else:
             return 'No provided!'
+
+    def dump_model(self, filename):
+        joblib.dump(self.__clf, filename)
+
+    def load_model(self, filename):
+        self.__clf = joblib.load(filename)
 
     @abc.abstractmethod
     def __fit__(self, params):
