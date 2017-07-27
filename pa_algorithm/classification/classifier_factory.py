@@ -1,8 +1,9 @@
-from .classifier import Classifier
-from .decision_tree import DecisionTree
-from .xgb import XGB
-from .svm import SVC
-from .rf import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from xgboost import XGBClassifier
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.externals import joblib
 
 
 class ClassifierFactory(object):
@@ -14,9 +15,9 @@ class ClassifierFactory(object):
         algorithm = str(algorithm).strip().upper()
 
         if algorithm == 'DT':
-            model = DecisionTree()
+            model = DecisionTreeClassifier()
         elif algorithm == 'XGB':
-            model = XGB()
+            model = XGBClassifier()
         elif algorithm == 'SVM':
             model = SVC()
             pass
@@ -29,5 +30,9 @@ class ClassifierFactory(object):
         return model
 
     @classmethod
+    def dump_model(cls, clf, filename):
+        joblib.dump(clf, filename)
+
+    @classmethod
     def load_model(cls, filename):
-        return Classifier().load_model(filename)
+        return joblib.load(filename)

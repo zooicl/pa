@@ -1,16 +1,17 @@
 import os
 import pandas as pd
 import pprint as pp
+import operator
 
 from sklearn import metrics
 from time import localtime, strftime
 
 
 class Reporter:
-    def __init__(self, algorithm, params, feature_importances, desc):
+    def __init__(self, algorithm, model, feature_names, desc):
         self.algorithm = algorithm
-        self.params = params
-        self.feature_importances = feature_importances
+        self.model = model
+        self.feature_names = feature_names
         self.desc = desc
         self.test_results = []
 
@@ -67,7 +68,17 @@ class Reporter:
     def print_out(self, stream=None):
         pp.pprint(self.algorithm, stream=stream)
         pp.pprint('<<Parameters>>', stream=stream)
+        pp.pprint(self.model.get_params())
         pp.pprint(self.test_results, stream=stream)
         pp.pprint('<<Feature Importances>>', stream=stream)
-        pp.pprint(self.feature_importances, stream=stream)
+        pp.pprint(self.get_feature_importances(), stream=stream)
         return
+
+    def get_feature_importances(self):
+        if hasattr(self.model, 'feature_importances_'):
+            feature_map = {}
+            for i, val in enumerate(self.model.feature_importances_):
+                feature_map[self.feature_names[i]] = val
+            return sorted(feature_map.items(), key=operator.itemgetter(1), reverse=True)
+        else:
+            return 'No provided!'

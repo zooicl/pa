@@ -43,10 +43,15 @@ for algo in [dt, xgb, svm, rf]:
     desc = algo['desc']
 
     model = ClassifierFactory.create_model(name)
-    model.fit(X_train, y_train, params)
+    model.fit(X_train, y_train, **params)
 
-    y_pred, y_prob = model.predict(X_test)
+    y_pred = model.predict(X_test)
 
-    reporter = Reporter(name, params, model.get_feature_importances(example.feature_names), desc)
+    y_prob = None
+    if hasattr(model, 'predict_proba'):
+        y_prob = model.predict_proba(X_test)[:, 1]
+
+    reporter = Reporter(name, model, example.feature_names, desc)
     reporter.add(y_true=y_test, y_pred=y_pred, y_prob=y_prob, desc=desc, y_id=None)
+    reporter.print_out()
     reporter.write()
